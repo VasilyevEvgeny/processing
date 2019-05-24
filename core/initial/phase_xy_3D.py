@@ -22,7 +22,7 @@ def fast_initialization(phase, x, y, m, n):
     return phase
 
 
-def plot_phase_3d(**params):
+def plot_phase_xy_3d_initial(**params):
     m = params['m']
     n = params['n']
     language = params.get('language', '')

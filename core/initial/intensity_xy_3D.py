@@ -16,7 +16,7 @@ def fast_initialization(M, x, y, n, r_0):
     return intensity
 
 
-def plot_intensity_xy_3d(**params):
+def plot_intensity_xy_3d_initial(**params):
     M = params['M']
     n = params['n']
     r_0 = params['r_0']
