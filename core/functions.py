@@ -10,7 +10,8 @@ from time import sleep
 def get_files(path, dir_name='pictures'):
     files = []
     for file in glob(path + '/*', recursive=True):
-        if file.split('\\')[1] != dir_name:
+        file = file.replace('\\', '/')
+        if file.split('/')[1] != dir_name:
             files.append(file)
 
     return files
@@ -38,7 +39,7 @@ def a_to_i(arr):
 
 
 @jit(nopython=True)
-def find_t_slice_with_maximum(arr):
+def find_r_slice_with_maximum(arr):
     max_val = maximum(arr)
     s_max = where(arr == max_val)[1][0]
 

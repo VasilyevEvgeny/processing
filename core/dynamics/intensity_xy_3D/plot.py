@@ -4,18 +4,18 @@ from matplotlib import pyplot as plt
 from core.functions import r_to_xy, filter_and_log_arr, crop_rs
 
 
-def plot_intensity_xy_3d(t_slice, r_max, r_right, res_path, idx, **params):
+def plot_intensity_xy_3d(r_slice, r_max, r_right, res_path, idx, **params):
     x_ticks = params['x_ticks']
     y_ticks = params['y_ticks']
     language = params['language']
 
-    n_r = len(t_slice)
+    n_r = len(r_slice)
     h_r = r_max / n_r
     rs = [i * h_r for i in range(n_r)]
     rs_cropped, r_right_idx = crop_rs(rs, r_right)
     rs_reflected = append([-e for e in rs_cropped[::-1]], rs_cropped)
 
-    arr = r_to_xy(t_slice[:r_right_idx])
+    arr = r_to_xy(r_slice[:r_right_idx])
     arr = filter_and_log_arr(arr)
 
     xx, yy = meshgrid(rs_reflected, rs_reflected)
@@ -60,5 +60,5 @@ def plot_intensity_xy_3d(t_slice, r_max, r_right, res_path, idx, **params):
 
     plt.tight_layout(rect=[-0.1, 0.1, 1.05, 1])
 
-    plt.savefig(res_path + '/%d.png' % idx)
+    plt.savefig(res_path + '/%04d.png' % idx)
     plt.close()
