@@ -1,5 +1,6 @@
 from numpy import append, meshgrid
 from matplotlib import pyplot as plt
+from matplotlib import colors as mcolors
 
 from core.functions import r_to_xy, filter_and_log_arr, crop_rs
 
@@ -8,6 +9,8 @@ def plot_intensity_xy_3d(r_slice, r_max, r_right, res_path, idx, **params):
     x_ticks = params['x_ticks']
     y_ticks = params['y_ticks']
     language = params['language']
+    cmap = params.get('cmap', 'jet')
+    dpi = params.get('dpi', None)
 
     n_r = len(r_slice)
     h_r = r_max / n_r
@@ -24,8 +27,11 @@ def plot_intensity_xy_3d(r_slice, r_max, r_right, res_path, idx, **params):
     font_weight = 'bold'
     fig = plt.figure(figsize=(13, 8))
     ax = fig.add_subplot(111, projection='3d')
+    ax.w_xaxis.set_pane_color(mcolors.to_rgba('white'))
+    ax.w_yaxis.set_pane_color(mcolors.to_rgba('white'))
+    ax.w_zaxis.set_pane_color(mcolors.to_rgba('white'))
     levels_plot = [-1. + i * 0.025 for i in range(130)]
-    ax.plot_surface(xx, yy, arr, cmap='jet', rstride=1, cstride=1, antialiased=False,
+    ax.plot_surface(xx, yy, arr, cmap=cmap, rstride=1, cstride=1, antialiased=False,
                     vmin=levels_plot[0], vmax=levels_plot[-1])
 
     offset_x = -(r_max / 2 - 0.025 * r_max)
@@ -60,5 +66,9 @@ def plot_intensity_xy_3d(r_slice, r_max, r_right, res_path, idx, **params):
 
     plt.tight_layout(rect=[-0.1, 0.1, 1.05, 1])
 
-    plt.savefig(res_path + '/%04d.png' % idx)
+    if dpi is None:
+        plt.savefig(res_path + '/%04d.png' % idx)
+    else:
+        plt.savefig(res_path + '/%04d.png' % idx, dpi=dpi)
+
     plt.close()

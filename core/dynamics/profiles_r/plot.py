@@ -1,9 +1,11 @@
 from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 
 def plot_profiles_r(data, res_path, **params):
     rlim = params['rlim']
     language = params['language']
+    dpi = params.get('dpi', None)
 
     if not data:
         raise Exception('Empty r_slices!')
@@ -21,11 +23,11 @@ def plot_profiles_r(data, res_path, **params):
         rs = [i * dr for i in range(n_r)]
 
         if lmbda == 1235:
-            color = 'blue'
+            linestyle = '-.'
         elif lmbda == 1557:
-            color = 'green'
+            linestyle = '--'
         elif lmbda == 1800:
-            color = 'red'
+            linestyle = '-'
         else:
             raise Exception('Wrong color!')
 
@@ -37,7 +39,7 @@ def plot_profiles_r(data, res_path, **params):
         else:
             label = '$\lambda_0 = %d$ нм' % lmbda
 
-        plt.plot(rs, r_slice, color=color, linewidth=5, alpha=0.8, label=label)
+        plt.plot(rs, r_slice, color='black', linewidth=3, linestyle=linestyle, alpha=0.8, label=label)
 
     plt.xlim(rlim)
 
@@ -53,11 +55,14 @@ def plot_profiles_r(data, res_path, **params):
     plt.xlabel(xlabel, fontsize=font_size, fontweight=font_weight)
     plt.ylabel(ylabel, fontsize=font_size, fontweight=font_weight)
 
-    plt.grid(linewidth=2, linestyle='dotted', color='black', alpha=0.5)
+    plt.grid(linewidth=2, linestyle='dotted', color='gray', alpha=0.5)
 
-    plt.legend(bbox_to_anchor=(0., 1.1, 1., .102), fontsize=font_size - 23, loc='center', ncol=3)
+    #plt.legend(bbox_to_anchor=(0., 1.1, 1., .102), fontsize=font_size - 23, loc='center', ncol=3)
 
-    plt.savefig(res_path + '/bullets_profiles.png', bbox_inches='tight')
+    if dpi is None:
+        plt.savefig(res_path + '/bullets_profiles.png', bbox_inches='tight')
+    else:
+        plt.savefig(res_path + '/bullets_profiles.png', bbox_inches='tight', dpi=dpi)
     plt.show()
     plt.close()
 

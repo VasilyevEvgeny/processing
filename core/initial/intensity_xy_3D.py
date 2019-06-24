@@ -25,6 +25,8 @@ def plot_intensity_xy_3d_initial(**params):
     z_ticks = params['z_ticks']
     z_lim = params['z_lim']
     language = params.get('language', '')
+    cmap=params.get('cmap', 'jet')
+    dpi = params.get('dpi', None)
 
     x_max, y_max = sqrt(M) * 5 * r_0, sqrt(M) * 5 * r_0
     x, y = zeros(n), zeros(n)
@@ -42,7 +44,7 @@ def plot_intensity_xy_3d_initial(**params):
 
     plt.title('$\mathbf{I / I_0 (x,y)}$', fontsize=font_size, fontweight=font_weight)
 
-    ax.plot_surface(xx, yy, intensity, cmap='jet', rstride=1, cstride=1, antialiased=False)
+    ax.plot_surface(xx, yy, intensity, cmap=cmap, rstride=1, cstride=1, antialiased=False)
     ax.view_init(elev=75, azim=315)
 
     offset_x = -(x_max / 2 + 0.05 * x_max)
@@ -71,7 +73,11 @@ def plot_intensity_xy_3d_initial(**params):
     ax.yaxis.set_tick_params(pad=15)
     ax.zaxis.set_tick_params(pad=15)
 
-    fig.savefig('i(x,y)_M=%d.png' % M, transparent=False, bbox_inches='tight')
+    if dpi is None:
+        fig.savefig('i(x,y)_M=%d.png' % M, transparent=False, bbox_inches='tight')
+    else:
+        fig.savefig('i(x,y)_M=%d.png' % M, transparent=False, bbox_inches='tight',
+                    dpi=dpi)
 
     plt.show()
     plt.close()

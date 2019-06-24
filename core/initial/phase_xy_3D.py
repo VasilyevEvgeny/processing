@@ -26,6 +26,7 @@ def plot_phase_xy_3d_initial(**params):
     m = params['m']
     n = params['n']
     language = params.get('language', '')
+    dpi = params.get('dpi', None)
 
     r_0 = 100
     x_max, y_max = 5 * r_0, 5 * r_0
@@ -79,5 +80,10 @@ def plot_phase_xy_3d_initial(**params):
     ax.zaxis.set_tick_params(pad=15)
 
     plt.show()
-    fig.savefig('phase(x,y)_ring_m=%d.png' % m, transparent=False, bbox_inches="tight")
+
+    if dpi is None:
+        fig.savefig('phase(x,y)_ring_m=%d.png' % m, transparent=False, bbox_inches='tight')
+    else:
+        fig.savefig('phase(x,y)_ring_m=%d.png' % m, transparent=False, bbox_inches='tight',
+                    dpi=dpi)
     plt.close()

@@ -10,6 +10,7 @@ def process_dynamics_profiles_r(**params):
     res_path = params['res_path']
     rlim = params['rlim']
     language = params.get('language', '')
+    dpi = params.get('dpi', None)
 
     files = filter_files(get_files(path), every=1)
     data = []
@@ -26,4 +27,5 @@ def process_dynamics_profiles_r(**params):
 
     plot_profiles_r(data, res_path,
                     rlim=rlim,
-                    language=language)
+                    language=language,
+                    dpi=dpi)

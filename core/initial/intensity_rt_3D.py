@@ -25,6 +25,8 @@ def plot_intensity_rt_3d_initial(**params):
     z_ticks = params['z_ticks']
     z_lim = params['z_lim']
     language = params.get('language', '')
+    cmap = params.get('cmap', 'jet')
+    dpi = params.get('dpi', None)
 
     r_max, t_max = sqrt(M) * 5 * r_0, sqrt(M) * 5 * t_0
     r, t = zeros(n), zeros(n)
@@ -40,9 +42,9 @@ def plot_intensity_rt_3d_initial(**params):
     fig = plt.figure(figsize=(13, 10))
     ax = fig.add_subplot(111, projection='3d')
 
-    plt.title('$\mathbf{I / I_0 (x,y)}$', fontsize=font_size, fontweight=font_weight)
+    plt.title('$\mathbf{I / I_0 (r,t)}$', fontsize=font_size, fontweight=font_weight)
 
-    ax.plot_surface(rr, tt, intensity, cmap='jet', rstride=1, cstride=1, antialiased=False)
+    ax.plot_surface(rr, tt, intensity, cmap=cmap, rstride=1, cstride=1, antialiased=False)
     ax.view_init(elev=75, azim=315)
 
     offset_x = -(r_max / 2 + 0.05 * r_max)
@@ -73,7 +75,11 @@ def plot_intensity_rt_3d_initial(**params):
     ax.yaxis.set_tick_params(pad=15)
     ax.zaxis.set_tick_params(pad=15)
 
-    fig.savefig('i(r,t)_M=%d.png' % M, transparent=False, bbox_inches='tight')
+    if dpi is None:
+        fig.savefig('i(r,t)_M=%d.png' % M, transparent=False, bbox_inches='tight')
+    else:
+        fig.savefig('i(r,t)_M=%d.png' % M, transparent=False, bbox_inches='tight',
+                    dpi=dpi)
 
     plt.show()
     plt.close()

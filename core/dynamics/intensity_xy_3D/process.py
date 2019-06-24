@@ -12,6 +12,8 @@ def process_dynamics_intensity_xy_3d(**params):
     x_ticks = params['x_ticks']
     y_ticks = params['y_ticks']
     language = params.get('language', '')
+    cmap = params.get('cmap', 'jet')
+    dpi = params.get('dpi', None)
 
     files = filter_files(get_files(path), every=1)
     for idx, file in enumerate(tqdm(files)):
@@ -20,4 +22,6 @@ def process_dynamics_intensity_xy_3d(**params):
         plot_intensity_xy_3d(r_slice, r_max * 10**6, r_right * 10**6, res_path, idx,
                              x_ticks=x_ticks,
                              y_ticks=y_ticks,
-                             language=language)
+                             language=language,
+                             cmap=cmap,
+                             dpi=dpi)
